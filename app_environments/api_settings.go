@@ -2,7 +2,7 @@ package app_environments
 
 import (
 	"github.com/jinzhu/gorm"
-	"github.com/vsouza/go-gin-boilerplate/models"
+	"github.com/shrhawk-entertainer/go_lang_api/models"
 )
 
 func MigrateDb(db *gorm.DB){

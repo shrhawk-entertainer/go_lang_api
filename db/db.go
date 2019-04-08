@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
-	"github.com/vsouza/go-gin-boilerplate/config"
+	"github.com/shrhawk-entertainer/go_lang_api/config"
 )
 
 var GlobalDb *gorm.DB

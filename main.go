@@ -5,10 +5,10 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/vsouza/go-gin-boilerplate/config"
-	"github.com/vsouza/go-gin-boilerplate/db"
-	"github.com/vsouza/go-gin-boilerplate/server"
-	"github.com/vsouza/go-gin-boilerplate/app_environments"
+	"github.com/shrhawk-entertainer/go_lang_api/app_environments"
+	"github.com/shrhawk-entertainer/go_lang_api/config"
+	"github.com/shrhawk-entertainer/go_lang_api/db"
+	"github.com/shrhawk-entertainer/go_lang_api/server"
 )
 
 func main() {

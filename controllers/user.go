@@ -2,8 +2,8 @@ package controllers
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/vsouza/go-gin-boilerplate/db"
-	"github.com/vsouza/go-gin-boilerplate/models"
+	"github.com/shrhawk-entertainer/go_lang_api/db"
+	"github.com/shrhawk-entertainer/go_lang_api/models"
 	"net/http"
 
 	//"net/http"

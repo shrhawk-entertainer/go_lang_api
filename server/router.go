@@ -2,8 +2,8 @@ package server
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/vsouza/go-gin-boilerplate/controllers"
-	"github.com/vsouza/go-gin-boilerplate/app_environments"
+	"github.com/shrhawk-entertainer/go_lang_api/app_environments"
+	"github.com/shrhawk-entertainer/go_lang_api/controllers"
 )
 
 func NewRouter() *gin.Engine {
