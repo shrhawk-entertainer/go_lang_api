@@ -1,0 +1,11 @@
+server:
+  port: "0.0.0.0:8087"
+http.auth:
+  key: test
+  secret: test
+mysql:
+  host: 'localhost'
+  port: 3306
+  user: 'root'
+  password: ''
+  database: 'gorm'
