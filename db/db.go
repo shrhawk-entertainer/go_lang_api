@@ -1,7 +1,6 @@
 package db
 
 import (
-	"errors"
 	"fmt"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
@@ -20,9 +19,10 @@ func Init() *gorm.DB {
 		config.GetString("mysql.port"),
 		config.GetString("mysql.database"),
 	)
+	fmt.Println(MySqlConnectionString)
 	db, DbError := gorm.Open("mysql", MySqlConnectionString)
 	if DbError != nil {
-		errors.New(DbError.Error())
+		panic(DbError.Error())
 	}
 	GlobalDb = db
 	return db

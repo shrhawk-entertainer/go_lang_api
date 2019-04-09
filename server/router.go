@@ -22,7 +22,7 @@ func NewRouter() *gin.Engine {
 		{
 			userGroup.GET("/:id", controllers.RetrieveUser)
 			userGroup.POST("/", controllers.CreateUser)
-			userGroup.DELETE('/', controllers.DeleteUser)
+			userGroup.DELETE("/", controllers.DeleteUser)
 		}
 	}
 	return router

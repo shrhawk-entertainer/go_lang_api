@@ -1,9 +1,11 @@
 package controllers
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/shrhawk-entertainer/go_lang_api/db"
 	"github.com/shrhawk-entertainer/go_lang_api/models"
+	"github.com/shrhawk-entertainer/go_lang_api/forms"
 	"net/http"
 	//"net/http"
 )
@@ -23,6 +25,12 @@ func RetrieveUser(c *gin.Context){
 }
 
 func CreateUser(c *gin.Context){
+	var user_sign_up_form = forms.UserSignup{}
+	if err := c.ShouldBind(&user_sign_up_form); err != nil {
+		fmt.Println(err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
 	user := &models.GormUser{
 		Name: "syed Hassan Raza",
 		Email: "shrhawk88@gmail.com",
