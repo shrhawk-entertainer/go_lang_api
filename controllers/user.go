@@ -5,7 +5,6 @@ import (
 	"github.com/shrhawk-entertainer/go_lang_api/db"
 	"github.com/shrhawk-entertainer/go_lang_api/models"
 	"net/http"
-
 	//"net/http"
 )
 
@@ -15,8 +14,33 @@ var userModel = new(models.User)
 
 func RetrieveUser(c *gin.Context){
 	userInfo := db.GetDB().First(&models.GormUser{})
+	if userInfo.RecordNotFound(){
+		c.JSON(http.StatusOK, gin.H{"user": "No user found"})
+		return
+	}
 	c.JSON(http.StatusOK, gin.H{"user": userInfo.Value})
+	return
 }
+
+func CreateUser(c *gin.Context){
+	user := &models.GormUser{
+		Name: "syed Hassan Raza",
+		Email: "shrhawk88@gmail.com",
+		Active: true,
+		Gender: "male",
+	}
+	db.GetDB().Create(user)
+	c.JSON(http.StatusOK, gin.H{"user": user})
+}
+
+func DeleteUser(c *gin.Context){
+	error_deletion := db.GetDB().Where([]int64{2}).Delete(&models.GormUser{}).Error
+	if error_deletion !=nil {
+
+	}
+}
+
+
 //func (u UserController) Retrieve(c *gin.Context) {
 //	if c.Param("id") != "" {
 //		user, err := userModel.GetByID(c.Param("id"))
