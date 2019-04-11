@@ -31,8 +31,8 @@ func CreateUser(c *gin.Context){
 		return
 	}
 	user := &models.GormUser{
-		Name: "syed Hassan Raza",
-		Email: "shrhawk88@gmail.com",
+		Name: user_sign_up_form.Name,
+		Email: user_sign_up_form.Email,
 		Active: true,
 		Gender: "male",
 	}
