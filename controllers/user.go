@@ -25,18 +25,25 @@ func RetrieveUser(c *gin.Context){
 }
 
 func CreateUser(c *gin.Context){
-	var user_sign_up_form = forms.UserSignup{}
-	if err := c.ShouldBind(&user_sign_up_form); err != nil {
+	var UserSignUpValidationForm = forms.UserSignupValidation{}
+	if err := c.ShouldBind(&UserSignUpValidationForm); err != nil {
 		c.JSON(http.StatusBadRequest, common.NewValidatorError(err))
 		return
 	}
-	user := &models.GormUser{
-		Name: user_sign_up_form.Name,
-		Email: user_sign_up_form.Email,
-		Active: true,
-		Gender: "male",
+	gender := UserSignUpValidationForm.Gender
+	if gender == "" {
+		gender = "female"
 	}
-	db.GetDB().Create(user)
+	user := &models.GormUser{
+		Name: UserSignUpValidationForm.Name,
+		Email: UserSignUpValidationForm.Email,
+		Active: true,
+		Gender: gender,
+	}
+	err := db.GetDB().Create(user)
+	if err != nil {
+		c.Abort()
+	}
 	c.JSON(http.StatusOK, gin.H{"user": user})
 }
 
