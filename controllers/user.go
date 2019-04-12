@@ -1,13 +1,13 @@
 package controllers
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
-	"github.com/shrhawk-entertainer/go_lang_api/db"
-	"github.com/shrhawk-entertainer/go_lang_api/models"
-	"github.com/shrhawk-entertainer/go_lang_api/forms"
 	"github.com/shrhawk-entertainer/go_lang_api/common"
+	"github.com/shrhawk-entertainer/go_lang_api/db"
+	"github.com/shrhawk-entertainer/go_lang_api/forms"
+	"github.com/shrhawk-entertainer/go_lang_api/models"
 	"net/http"
-	//"net/http"
 )
 
 type UserController struct{}
@@ -18,9 +18,9 @@ func RetrieveUser(c *gin.Context){
 	userInfo := db.GetDB().First(&models.GormUser{})
 	if userInfo.RecordNotFound(){
 		c.JSON(http.StatusOK, gin.H{"user": "No user found"})
-		return
+	}else{
+		c.JSON(http.StatusOK, gin.H{"user": userInfo.Value})
 	}
-	c.JSON(http.StatusOK, gin.H{"user": userInfo.Value})
 	return
 }
 
@@ -42,7 +42,9 @@ func CreateUser(c *gin.Context){
 	}
 	err := db.GetDB().Create(user)
 	if err != nil {
-		c.Abort()
+		fmt.Println(err.Error)
+		c.AbortWithStatusJSON(500,  gin.H{"message": err.Error.Error()})
+		return
 	}
 	c.JSON(http.StatusOK, gin.H{"user": user})
 }
