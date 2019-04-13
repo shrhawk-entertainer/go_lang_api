@@ -2,6 +2,7 @@ package common
 
 import (
 	"fmt"
+	"github.com/go-sql-driver/mysql"
 	"gopkg.in/go-playground/validator.v8"
 	"math/rand"
 )
@@ -41,4 +42,9 @@ func NewValidatorError(err error) CommonError {
 
 	}
 	return res
+}
+
+func GetDatabaseErrorNumber(err error) uint16 {
+	dbErrorNumber, _ := err.(*mysql.MySQLError)
+	return dbErrorNumber.Number
 }

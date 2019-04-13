@@ -40,13 +40,18 @@ func CreateUser(c *gin.Context){
 		Active: true,
 		Gender: gender,
 	}
-	err := db.GetDB().Create(user)
+	err := db.GetDB().Create(user).Error
 	if err != nil {
-		fmt.Println(err.Error)
-		c.AbortWithStatusJSON(500,  gin.H{"message": err.Error.Error()})
+		dbErrorNumber := common.GetDatabaseErrorNumber(err)
+		message := "internal server error"
+		if dbErrorNumber == 1062 {
+			message = fmt.Sprintf("email %s already exist", UserSignUpValidationForm.Email)
+		}
+		c.AbortWithStatusJSON(http.StatusInternalServerError,  gin.H{"message": message})
 		return
 	}
 	c.JSON(http.StatusOK, gin.H{"user": user})
+	return
 }
 
 func DeleteUser(c *gin.Context){
