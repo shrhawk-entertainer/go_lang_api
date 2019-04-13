@@ -7,6 +7,7 @@ import (
 	"github.com/shrhawk-entertainer/go_lang_api/db"
 	"github.com/shrhawk-entertainer/go_lang_api/forms"
 	"github.com/shrhawk-entertainer/go_lang_api/models"
+	"github.com/shrhawk-entertainer/go_lang_api/serializers"
 	"net/http"
 )
 
@@ -15,11 +16,17 @@ type UserController struct{}
 var userModel = new(models.User)
 
 func RetrieveUser(c *gin.Context){
-	userInfo := db.GetDB().First(&models.GormUser{})
-	if userInfo.RecordNotFound(){
+	userInfo := &models.GormUser{}
+	err := db.GetDB().First(&userInfo)
+	if err.RecordNotFound(){
 		c.JSON(http.StatusOK, gin.H{"user": "No user found"})
 	}else{
-		c.JSON(http.StatusOK, gin.H{"user": userInfo.Value})
+		profileResponse := serializers.UserResponse{
+			Email: userInfo.Email,
+			Gender: userInfo.Gender,
+			Name: userInfo.Name,
+		}
+		c.JSON(http.StatusOK, gin.H{"user": profileResponse})
 	}
 	return
 }
